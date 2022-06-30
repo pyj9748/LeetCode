@@ -1,0 +1,58 @@
+class Solution {
+    func reconstructQueue(_ people: [[Int]]) -> [[Int]] {
+        var answer : [[Int]] = []
+        
+        
+        var arr = people
+        //sort
+        arr.sort(by: {
+            $0[1] < $1[1]
+        })
+        for i in arr {
+            
+            answer.append(i)
+            
+            // validation
+            if answer.count != 1 { 
+                var count = 0
+                
+                for j in 0..<answer.count - 1 {
+                    if answer[j][0] >= i[0] {
+                        count += 1
+                    }   
+                }
+                
+                if count > i[1] {
+
+                    // insertion
+                    answer.removeLast()
+                    var cur = 0
+                    for k in 0..<answer.count {
+                        if i[0] <= answer[k][0] {
+                            cur += 1
+                        }
+                        if cur > i[1] {
+                            // insert 
+                           
+                            //print(answer[k])
+                            answer.insert(i, at:k )
+                            
+                            
+                            break
+                        }
+                    }
+                }
+                
+                
+            }
+            
+    
+            
+        }
+        
+        
+        
+        
+        return answer
+    }
+}
