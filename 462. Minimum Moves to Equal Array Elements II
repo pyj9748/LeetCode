@@ -1,0 +1,27 @@
+class Solution {
+    func minMoves2(_ nums: [Int]) -> Int {
+        var answer = 0
+        
+        var arr = nums
+        arr.sort()
+        
+        var median = 0
+        var index = arr.count / 2
+        if nums.count % 2 == 0 {
+            median = (arr[index] + arr[index - 1]) / 2
+           
+        }
+        else {
+            median = arr[index]
+        }
+
+        //print(median)
+        
+        for i in nums {   
+            answer += abs(i - median)
+        }
+        
+        
+        return answer 
+    }
+}
