@@ -1,0 +1,39 @@
+class Solution {
+    func maxArea(_ h: Int, _ w: Int, _ horizontalCuts: [Int], _ verticalCuts: [Int]) -> Int {
+        
+        var n = h
+        var m = w
+        var hori: [Int] = horizontalCuts
+        var verti: [Int] = verticalCuts
+        var hCut: [Int] = hori.sorted()
+        var vCut: [Int] = verti.sorted()
+        var h: [Int] = []
+        var v: [Int] = []
+        
+        // horizontal
+        hCut.insert(0,at:0)
+        hCut.append(n)
+        if hCut.count > 1 {
+            for i in 0..<hCut.count - 1 {
+                h.append(hCut[i+1] - hCut[i])
+            }
+        }
+       
+        //vertical
+        vCut.insert(0,at:0)
+        vCut.append(w)
+        if vCut.count > 1{
+            for i in 0..<vCut.count - 1 {
+                v.append(vCut[i+1] - vCut[i])
+            }
+        }
+        
+       // print(h, v)
+        n = h.max()!
+        m = v.max()!
+      
+       
+       
+        return ((n * m) % 1000000007)
+    }
+}
