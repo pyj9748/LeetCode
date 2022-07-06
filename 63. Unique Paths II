@@ -1,0 +1,49 @@
+class Solution {
+    func uniquePathsWithObstacles(_ oGrid: [[Int]]) -> Int {
+
+        var n = oGrid.count
+        var m = oGrid[0].count
+        if oGrid[n-1][m-1] == 1 || oGrid[0][0] == 1{
+            return 0
+        }
+        var dp = Array(repeating: Array(repeating: 0 , count: m), count: n)
+        
+        for i in 1..<dp[0].count {
+            if oGrid[0][i] == 1 {
+                break
+            }
+            dp[0][i] = 1
+        }
+        for i in 1..<dp.count {
+            if oGrid[i][0] == 1 {
+                break
+            }
+            dp[i][0] = 1
+            
+        }
+        if n == 1 && m == 1 {
+            return 1
+        }
+        
+        for i in 1..<n {
+            for j in 1..<m {
+                var rhs = 0
+                var lhs = 0
+                if oGrid[i-1][j] == 1 {
+                    rhs = 0
+                }
+                else {
+                    rhs = dp[i-1][j]
+                }
+                if oGrid[i][j-1] == 1 {
+                    lhs = 0
+                }else{
+                    lhs = dp[i][j-1]
+                }
+                dp[i][j] = rhs + lhs
+            }
+        }
+        
+        return dp[n-1][m-1]
+    }
+}
