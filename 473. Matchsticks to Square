@@ -1,0 +1,52 @@
+class Solution {
+    func makesquare(_ matchsticks: [Int]) -> Bool {
+        if matchsticks.count < 4 {
+            return false
+        }
+        var sum = matchsticks.reduce(0,+)
+        if sum % 4 != 0 {
+            return false
+        }
+        var side = sum / 4
+         
+        var arr = matchsticks
+        arr.sort {
+            $0 > $1
+        }
+        //print(arr)
+        func dfs(_ s1: Int, _ s2: Int, _ s3: Int, _ s4: Int, _ i: Int) -> Bool {
+            //print(s1,s2,s3,s4 , i)
+            if s1 > side || s2 > side || s3 > side || s4 > side {
+                return false
+            }
+            if i ==  arr.count  {
+                if s1 == s2 && s2 == s3 && s3 == s4 {
+                    return true
+                } 
+               // print (s1,s2,s3,s4)
+                return false
+            }
+               
+            if i > arr.count - 1 {
+               return false 
+            }
+            if s1 == side {
+                 return dfs(s1,s2 + arr[i],s3,s4,i+1) || dfs(s1,s2,s3 + arr[i],s4,i+1) || dfs(s1,s2,s3,s4 + arr[i],i+1)
+            }
+            else if s1 == s2 && s2 == side {
+                 return dfs(s1,s2,s3 + arr[i],s4,i+1) || dfs(s1,s2,s3,s4 + arr[i],i+1)
+            }
+            
+            else if s1 == s2 && s2 == s3 && s3 == side{
+                 return dfs(s1,s2,s3,s4 + arr[i],i+1)
+            }
+            
+            return dfs(s1 + arr[i],s2,s3,s4,i+1) || dfs(s1,s2 + arr[i],s3,s4,i+1) || dfs(s1,s2,s3 + arr[i],s4,i+1) || dfs(s1,s2,s3,s4 + arr[i],i+1)
+        
+        }
+        
+       
+       
+        return dfs(0,0,0,0,0)
+    }
+}
