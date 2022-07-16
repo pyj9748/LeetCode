@@ -1,0 +1,51 @@
+class Solution {
+    func maxAreaOfIsland(_ grid: [[Int]]) -> Int {
+        
+        var visited:[[Int]] = Array(repeating:Array(repeating: 0,count:                         grid[0].count),count: grid.count)
+       
+        var answer = 0
+        let m = grid.count
+        let n = grid[0].count
+
+        for i in 0..<m {
+            for j in 0..<n{
+                if grid[i][j] == 1 && visited[i][j] == 0 {
+                    var que:[[Int]] = [[i,j]]
+                    var size = 0
+                    while que.count > 0 {
+                        
+                        var front = que[0]
+                       
+                        que.removeFirst()
+                        visited[front[0]][front[1]] = 1
+                        size += 1 
+                        
+                        if front[0] > 0 && grid[front[0]-1][front[1]] == 1 && visited[front[0]-1][front[1]] == 0  {
+                            visited[front[0]-1][front[1]] = 1
+                            que.append([front[0]-1,front[1]])
+                        } 
+                        if front[0] < m-1 && grid[front[0]+1][front[1]] == 1 && visited[front[0]+1][front[1]] == 0 {
+                            visited[front[0]+1][front[1]] = 1
+                            que.append([front[0]+1,front[1]])
+                        } 
+                        if front[1] > 0 && grid[front[0]][front[1]-1] == 1 && visited[front[0]][front[1]-1] == 0 {
+                            visited[front[0]][front[1]-1] = 1
+                            que.append([front[0],front[1]-1])
+                        } 
+                        if front[1] < n-1 && grid[front[0]][front[1]+1] == 1 && visited[front[0]][front[1]+1] == 0  {
+                            visited[front[0]][front[1]+1] = 1
+                            que.append([front[0],front[1]+1])
+                        }
+                        
+                    }
+                   
+                    answer = answer > size ? answer : size
+                    
+                }
+  
+            }
+        } 
+        
+        return answer
+    }
+}
