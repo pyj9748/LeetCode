@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func rightSideView(_ root: TreeNode?) -> [Int] {
+        var arr: [[Int]] = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        func dfs(_ level: Int, _ node:TreeNode?) {
+            guard let node = node else {return}
+            arr[level].append(node.val)
+            if let left = node.left {
+                dfs(level+1, left)
+            }
+            if let right = node.right {
+                dfs(level+1, right)
+            }  
+        }
+        
+       
+        
+        guard var first = root else { return []}
+        
+        dfs(0,first)
+        //print(arr)
+        var answer: [Int] = []      
+        for i in arr {
+            if i.count == 0 {
+                break
+            }
+            answer.append(i.last ?? 1000)
+        }
+          
+        return answer
+    
+
+        
+    }
+}
