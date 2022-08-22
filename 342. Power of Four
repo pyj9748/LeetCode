@@ -1,0 +1,19 @@
+class Solution {
+    
+    func recur4(n: Int) -> Bool {
+        if n == 4 || n == 1 {
+            return true
+        }
+        if n < 4 {
+            return false
+        }
+        if n % 4 == 0 {
+            return recur4(n: n / 4)
+        }
+        return false
+    }
+    func isPowerOfFour(_ n: Int) -> Bool {
+        var num = n
+        return recur4(n:n)
+    }
+}
