@@ -1,0 +1,25 @@
+class Solution {
+    func uniqueMorseRepresentations(_ words: [String]) -> Int {
+        var morse = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+        let a = "a" as Character
+        
+        var arr: [String] = [] 
+        for word in words {
+            var str = ""
+            for c in word {
+                let index = c.asciiValue! - a.asciiValue!
+                str += morse[Int(index)]
+            }
+            arr.append(str)           
+        }
+        var dict: [String: Int] = [:]
+        for item in arr {
+            if let value = dict[item] {
+                dict[item] = 1
+            } else {
+                dict[item] = 1
+            }           
+        }
+        return dict.count
+    }
+}
