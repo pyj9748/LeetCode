@@ -1,0 +1,25 @@
+class Solution {
+    func minSetSize(_ arr: [Int]) -> Int {
+        var dict: [Int: Int] = [:]
+        for item in arr {
+            if let _ = dict[item] {
+                dict[item] = dict[item]! + 1
+            } else {
+              dict[item] = 1  
+            }
+        }
+       // print(dict)
+        let arr2 = dict.sorted(){
+            $0.1 > $1.1
+        }
+        //print(arr2)
+        var half = arr.count / 2
+        var sum = 0
+        var count = 0
+        while sum < half {
+            sum += arr2[count].value
+            count += 1
+        }
+        return count
+    }
+}
