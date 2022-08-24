@@ -1,0 +1,17 @@
+class Solution {
+    func isPowerOfThree(_ n: Int) -> Bool {
+        return recur3(n)
+    }
+    func recur3(_ n: Int) -> Bool {
+        if n == 1 || n == 3 {
+            return true
+        }
+        if n == 0 {
+            return false
+        }
+        if n % 3 != 0 {
+            return false
+        }
+        return recur3(n/3)
+    }
+}
