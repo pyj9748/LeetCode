@@ -1,0 +1,36 @@
+class Solution {
+    func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
+        var adict: [Character: Int] = [:]
+        var bdict: [Character: Int] = [:]
+        
+        for c in ransomNote {
+            if let _ = adict[c] {
+                adict[c] = adict[c]! + 1
+            }
+            else {
+                adict[c] = 1
+            }
+        }
+        for c in magazine {
+            if let _ = bdict[c] {
+                bdict[c] = bdict[c]! + 1
+            }
+            else {
+                bdict[c] = 1
+            }
+        }
+        for key in bdict.keys {
+            if let _ = adict[key] {
+                adict[key] = adict[key]! - bdict[key]! 
+                if adict[key]! <= 0 {
+                    adict[key] = nil
+                }
+            }
+        }
+        if adict.keys.count == 0 {
+            return true
+        }
+        
+        return false
+    }
+}
