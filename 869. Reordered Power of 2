@@ -1,0 +1,29 @@
+class Solution {
+    func reorderedPowerOf2(_ n: Int) -> Bool {
+        var powOf2s: [String] = []
+        for i in 0...30 {
+            var pow = String(pow(2,i))
+            var arr: [String] = []
+            for i in pow {
+                arr.append(String(i))
+            }
+            let arr2 = arr.sorted().joined()
+            powOf2s.append(arr2)
+        }
+        let str = String(n)
+        var sortedStr = ""
+        var arr3: [String] = []
+        for c in str {
+            arr3.append(String(c))
+        }
+        sortedStr = arr3.sorted().joined()
+        if powOf2s.contains(sortedStr) { return true }
+        return false
+    }
+    
+    func pow (_ base:Int, _ power:Int) -> Int {
+        var answer : Int = 1
+        for _ in 0..<power { answer *= base }
+        return answer
+    }
+}
