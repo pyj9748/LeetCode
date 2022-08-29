@@ -1,0 +1,51 @@
+class Solution {
+    func numIslands(_ grid: [[Character]]) -> Int {
+        var board = grid
+        let m = grid.count
+        let n = grid[0].count
+        var result = 0
+        for i in 0..<m {
+            for j in 0..<n {
+                if board[i][j] == "1"  {
+                    board[i][j] = "0"
+                    var queue:[[Int]] = []
+                    queue.append([i,j])
+            
+                    while !queue.isEmpty{
+                        let front = queue.first!
+                        queue.removeFirst()
+                        let y = front[0]
+                        let x = front[1]
+                        if y < m - 1 {
+                            if  board[y + 1][x] == "1"  {
+                                queue.append([y + 1,x])
+                                board[y+1][x] = "0"
+                            }
+                        }  
+                        if x < n - 1 {
+                            if  board[y][x+1] == "1" {
+                                queue.append([y,x+1])
+                                board[y][x+1] = "0"
+                        }
+                            }  
+                        if y > 0 {
+                            if board[y - 1][x] == "1" {
+                                queue.append([y - 1,x])
+                                board[y-1][x] = "0"
+                            }
+                        }  
+                        if x > 0 {
+                            if board[y][x-1] == "1" {
+                                queue.append([y,x-1])
+                                 board[y][x-1] = "0"
+                             }
+                        }   
+            }
+                    result += 1
+                }
+            }
+        }
+        return result
+        
+    }
+}
