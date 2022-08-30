@@ -1,0 +1,18 @@
+class Solution {
+    func rotate(_ matrix: inout [[Int]]) {
+        let m = matrix.count
+        let n = m
+        var arr: [[Int]] = []
+        for i in 0..<m {
+            arr.append([])
+        }
+        
+        for i in 0..<m {
+            for j in 0..<n {
+                arr[j].insert(matrix[i][j],at:0)  
+            }
+        }
+        matrix = arr
+        return 
+    }
+}
