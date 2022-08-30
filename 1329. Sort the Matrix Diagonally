@@ -1,0 +1,51 @@
+class Solution {
+    func diagonalSort(_ mat: [[Int]]) -> [[Int]] {
+        let m = mat.count
+    
+        let n = mat[0].count
+        var matrix = mat
+        // 1
+        var y = m-1
+        var x = 0
+        while y >= 0 {
+            var arr:[Int] = []
+            var _y = y
+            var _x = x
+            arr.append(mat[_y][_x])
+            while _y + 1 <= m - 1 && _x + 1 <= n - 1 {
+                arr.append(mat[_y+1][_x+1])
+                _y += 1
+                _x += 1
+            }
+            arr.sort()
+         
+            for i in 0..<arr.count {
+                matrix[y+i][x+i] = arr[i]
+            }
+            y -= 1
+        }
+        
+        //2
+        var y1 = 0
+        var x1 = 0
+        
+        while x1 <= n - 1 {
+            var arr:[Int] = []
+            var _y = y1
+            var _x = x1
+            arr.append(mat[_y][_x])
+            while _y + 1 <= m - 1 && _x + 1 <= n - 1 {
+                arr.append(mat[_y+1][_x+1])
+                _y += 1
+                _x += 1
+            }
+            arr.sort()
+            for i in 0..<arr.count {
+                matrix[y1+i][x1+i] = arr[i]
+            }
+            x1 += 1 
+        }
+        
+        return matrix
+    }
+}
