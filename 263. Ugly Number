@@ -1,0 +1,36 @@
+class Solution {
+    func isUgly(_ n: Int) -> Bool {
+        var num = n
+        var set: Set<Int> = []
+        var answer: Set<Int> = [2, 3, 5]
+        if num == 1 {
+            return true
+        }
+         if  num <= 0 {
+            return false
+        }
+        while num != 1 {
+            if num % 2 == 0 {
+                set.insert(2)
+                num = num / 2
+            } else if num % 3 == 0 {
+                set.insert(3)
+                num = num / 3
+            } else if num % 5 == 0 {
+                set.insert(5)
+                num = num / 5
+            } else {
+                set.insert(num)
+                break
+            }
+        }
+        print(set)
+      
+        if set.subtracting(answer) == [] {
+            return true
+        }
+        return false
+    }
+
+
+}
