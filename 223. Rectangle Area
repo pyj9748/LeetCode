@@ -1,0 +1,22 @@
+class Solution {
+    func computeArea(_ ax1: Int, _ ay1: Int, _ ax2: Int, _ ay2: Int, _ bx1: Int, _ by1: Int, _ bx2: Int, _ by2: Int) -> Int {
+        var r1 = (ay2 - ay1) * (ax2 - ax1)
+        var r2 = (by2 - by1) * (bx2 - bx1)
+        var n = 0
+        var m = 0
+
+        if ax1 > bx2 || bx1 > ax2 {
+            n = 0
+        } else {
+            n = ((bx2 - bx1) + (ax2 - ax1) - ((max(ax1, bx1) - min(ax1, bx1)) + (max(ax2, bx2) - min(ax2, bx2)))) / 2
+        }
+
+        if ay1 > by2 || by1 > ay2 {
+            m = 0
+        } else {
+            m = ((by2 - by1) + (ay2 - ay1) - ((max(ay1, by1) - min(ay1, by1)) + (max(ay2, by2) - min(ay2, by2)))) / 2
+        }
+
+        return r1 + r2 - (n * m)
+    }
+}
