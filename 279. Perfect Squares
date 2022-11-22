@@ -1,0 +1,23 @@
+class Solution {
+    func numSquares(_ n: Int) -> Int {
+        var dp = Array(repeating: n, count: n + 1)
+        dp[0] = 0
+       
+        if n == 1 {
+            return 1
+        }
+        let maxIndex = Int(sqrt(Double(n))) + 1
+
+        for i in 1...n {
+            for j in 1..<maxIndex {
+                let num = j * j
+                if i < num {
+                    break
+                }
+                dp[i] = min(dp[i - num] + 1, dp[i])
+            }
+        }
+
+        return dp[n]
+    }
+}
