@@ -1,0 +1,54 @@
+class Solution {
+    func isValidSudoku(_ board: [[Character]]) -> Bool {
+        // row
+        var dict: [ Character : Int ] = [:]
+        for i in 0..<9 {
+            dict = [:]
+            for j in 0..<9 {
+                if board[i][j] == "." {
+                    continue
+                } 
+                if let a = dict[board[i][j]] {
+                    return false
+                } else {
+                    dict[board[i][j]] = 1
+                }
+            }
+        }   
+        // col
+        for j in 0..<9 {
+            dict = [:]
+            for i in 0..<9 {
+                if board[i][j] == "." {
+                    continue
+                }
+                if let a = dict[board[i][j]] {
+                    return false
+                } else {
+                    dict[board[i][j]] = 1
+                }
+            }
+        }
+        // square
+        let a = [1, 4, 7]
+        for i in a {
+            for j in a {
+                dict = [:]
+                for n in (i - 1)...(i + 1) {
+                    for m in (j - 1)...(j + 1) {
+                        if board[n][m] == "." {
+                            continue
+                        }
+                        if let a = dict[board[n][m]] {
+                            //print(n, m, i,a,dict)
+                            return false
+                        } else {
+                             dict[board[n][m]] = 1
+                        }
+                    }
+                }
+            }
+        }
+        return true
+    }
+}
