@@ -1,0 +1,26 @@
+class Solution {
+    func findWinners(_ matches: [[Int]]) -> [[Int]] {
+        var dict: [ Int : Int ] = [:]
+        for i in 0..<matches.count {
+            let winner = matches[i][0]
+            let loser = matches[i][1]
+            if let a = dict[winner] {
+
+            } else {
+                dict[winner] = 0
+            }
+            if let b = dict[loser] {
+                dict[loser] = dict[loser]! + 1
+            } else {
+                dict[loser] = 1
+            }
+        }
+        let answer0 = dict.keys.filter {
+            dict[$0]! == 0
+        } 
+        let answer1 = dict.keys.filter {
+            dict[$0]! == 1
+        } 
+        return [answer0.sorted(), answer1.sorted()]
+    }
+}
