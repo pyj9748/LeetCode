@@ -1,0 +1,38 @@
+class Solution {
+    func closeStrings(_ word1: String, _ word2: String) -> Bool {
+        if word1.count != word2.count {
+            return false
+        }
+        var arr1 = Array(word1).sorted()
+        var arr2 = Array(word2).sorted()
+        var dict1: [Character: Int] = [:]
+        var dict2: [Character: Int] = [:]
+        for i in 0..<word1.count {
+            if let a = dict1[arr1[i]] {
+                dict1[arr1[i]] = a + 1
+            } else {
+                dict1[arr1[i]] = 1
+            }
+        }
+        for i in 0..<word2.count {
+            if let a = dict2[arr2[i]] {
+                dict2[arr2[i]] = a + 1
+            } else {
+                dict2[arr2[i]] = 1
+            }
+        }
+        let keys1 = dict1.keys.sorted()
+        let keys2 = dict2.keys.sorted()
+        if keys1 != keys2 {
+            return false
+        }
+        let vals1 = dict1.values.sorted()
+        let vals2 = dict2.values.sorted()
+        if vals1 != vals2 {
+            return false
+        }
+
+        return true
+    }
+    
+}
