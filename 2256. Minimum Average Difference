@@ -1,0 +1,33 @@
+class Solution {
+    func minimumAverageDifference(_ nums: [Int]) -> Int {
+        let a = Set(nums)
+        if a == Set<Int>([0]) {
+            return 0
+        }
+        var arr: [Int] = []
+        let total = nums.reduce(0, +)
+        var left = 0 
+        var right = total
+        for i in 0..<nums.count {
+            print(i)
+            left += nums[i]
+            right -= nums[i]
+
+            let a = left / (i + 1)
+            var b: Int
+            if nums.count - (i + 1) != 0 {
+                b = right / (nums.count - (i + 1))
+            } else {
+                b = 0
+            }
+            arr.append(abs(a - b))
+        }
+        let min = arr.min()!
+        for i in 0..<nums.count {
+            if arr[i] == min {
+                return i
+            }
+        }
+        return 0
+    }
+}
