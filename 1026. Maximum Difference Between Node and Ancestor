@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func maxAncestorDiff(_ root: TreeNode?) -> Int {
+        var queue: [TreeNode] = []
+        var maxDiff = 0
+        queue.append(root!)
+        while !queue.isEmpty {
+            let cur = queue.removeFirst() 
+            var tempQueue: [TreeNode] = []
+            tempQueue.append(cur)
+            while !tempQueue.isEmpty { 
+                let cur2 = tempQueue.removeFirst()
+
+                if let left = cur2.left {
+                    if maxDiff < abs(cur.val - left.val) {
+                        maxDiff = abs(cur.val - left.val)
+                    }
+                    tempQueue.append(left)
+                }
+                if let right = cur2.right {
+                    if maxDiff < abs(cur.val - right.val) {
+                        maxDiff = abs(cur.val - right.val)
+                    }
+                    tempQueue.append(right)
+                }
+            }
+            if let left = cur.left {
+                queue.append(left)
+            }
+            if let right = cur.right {
+                queue.append(right)
+            } 
+        }
+        return maxDiff
+
+    }
+}
