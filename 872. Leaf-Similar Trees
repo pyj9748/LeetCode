@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func leafSimilar(_ root1: TreeNode?, _ root2: TreeNode?) -> Bool {
+        let arr1 = arr(root1)
+        let arr2 = arr(root2)
+        
+        return arr1 == arr2 ? true : false  
+    }
+
+    func arr(_ root: TreeNode?) -> [Int] {
+        var queue :[TreeNode] = []
+        var arr: [Int] = []
+        queue.append(root!)
+        while !queue.isEmpty {
+            let cur = queue.removeFirst()
+            if cur.left == nil && cur.right == nil {
+                arr.append(cur.val)
+                continue
+            } 
+            if let right = cur.right {
+                queue.insert(right, at: 0)
+            }
+            if let left = cur.left {
+                queue.insert(left, at: 0)
+            }
+        }
+        return arr
+    }
+}
