@@ -1,0 +1,27 @@
+class Solution {
+    func validPath(_ n: Int, _ edges: [[Int]], _ source: Int, _ destination: Int) -> Bool {
+        var destinationsFrom: [Int: [Int]] = [:]
+        var visited = Array(repeating: false, count: n)
+        for edge in edges {
+            destinationsFrom[edge[0], default: []].append(edge[1])
+            destinationsFrom[edge[1], default: []].append(edge[0])
+        }
+
+        return dfs(source, destination, &visited, destinationsFrom)
+    }
+
+    func dfs(_ from: Int, _ to: Int, _ visited: inout [Bool], _ destinationsFrom: [Int: [Int]]) -> Bool {
+        guard from != to else { return true }
+        guard visited[from] == false else { return false }
+        
+        visited[from] = true
+        for next in destinationsFrom[from, default: []] {
+            let isReachable = dfs(next, to, &visited, destinationsFrom)
+            if isReachable {
+                return true
+            }
+        }
+
+        return false
+    }
+}
