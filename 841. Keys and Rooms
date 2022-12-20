@@ -1,0 +1,28 @@
+class Solution {
+    func canVisitAllRooms(_ rooms: [[Int]]) -> Bool {
+        var room = rooms
+        var queue: [Int] = []
+        var dict: [Int : Bool] = [:]
+
+        for i in 0..<rooms.count {
+            dict[i] = false
+        }
+        dict[0] = true
+        for key in room[0] {
+            queue.append(key)
+        }
+        while !queue.isEmpty {
+            let top = queue.removeLast()
+            dict[top] = true
+            for key in room[top] {
+                queue.append(key)
+            }
+            room[top] = []
+        }
+
+        if dict.values.contains(false) {
+            return false
+        }
+        return true
+    }
+}
