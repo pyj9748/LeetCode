@@ -1,0 +1,61 @@
+class Solution {
+    func possibleBipartition(_ n: Int, _ dislikes: [[Int]]) -> Bool {
+        var dict: [Int: [Int]] = [:]
+        var color: [Int: Int] = [:]
+        if dislikes.count == 0 {
+            return true
+        }
+        for i in 1...n {
+            color[i] = 0
+        }
+        for dislike in dislikes {
+            if var arr = dict[dislike[0]] {
+                arr.append(dislike[1])
+                dict[dislike[0]] = arr
+            } else {
+                dict[dislike[0]] = [dislike[1]]
+            }
+            if var arr = dict[dislike[1]] {
+                arr.append(dislike[0])
+                dict[dislike[1]] = arr
+            } else {
+                dict[dislike[1]] = [dislike[0]]
+                color[dislike[1]] = 0
+            }
+        }
+        var st: [Int] = []
+        
+        while color.values.contains(0){
+
+            for key in color.keys {
+                if color[key]! == 0 {
+                    st.append(key)
+                    color[key] = 1
+                    print("key", key)
+                    break
+                }
+            }
+            while !st.isEmpty {
+                let top = st.removeFirst()
+                if let _ = dict[top] {
+
+                } else {
+                    continue
+                }
+                for value in dict[top]! {
+                    if color[value]! == 0 {
+                        color[value] = color[top]! * -1
+                        st.append(value)
+                    } else {
+                        if color[value]! == color[top]! {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        
+        print(color)
+        return true
+    }
+}
