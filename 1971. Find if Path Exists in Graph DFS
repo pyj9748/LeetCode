@@ -1,0 +1,36 @@
+class Solution {
+    func validPath(_ n: Int, _ edges: [[Int]], _ source: Int, _ destination: Int) -> Bool {
+        var edgeDict: [Int : [Int]] = [:]
+        var visited = Array(repeating: 0, count: n)
+        for edge in edges {
+            if var arr = edgeDict[edge[0]] {
+                arr.append(edge[1])
+                edgeDict[edge[0]] = arr
+            } else {
+                edgeDict[edge[0]] = [edge[1]]
+            }
+            if var arr = edgeDict[edge[1]] {
+                arr.append(edge[0])
+                edgeDict[edge[1]] = arr
+            } else {
+                edgeDict[edge[1]] = [edge[0]]
+            }
+        }
+        var queue: [Int] = [source]
+        while !queue.isEmpty {
+            let top = queue.removeLast()
+            visited[top] = 1
+            if let nodes = edgeDict[top] {
+                for node in nodes {
+                    if visited[node] == 0 {
+                        queue.append(node)
+                    }
+                }
+            }
+            
+        }
+
+        return visited[destination] == 1 ? true : false
+    }
+}
+
