@@ -1,0 +1,33 @@
+class Solution {
+    var dp: [[Int]: Int] = [:]
+    func maxProfit(_ prices: [Int]) -> Int {
+        let cnt = prices.count
+        if cnt == 1 {
+            return 0
+        }
+        
+        return profit(prices, 0, 1)
+    }
+
+    func profit(_ prices: [Int], _ index: Int, _ isBuying: Int) -> Int{
+        if index >= prices.count {
+            return 0
+        }
+        if let val = dp[[index, isBuying]] {
+            return val
+        }
+
+        var result = Int.min
+        if isBuying == 1 {
+            let buy = profit(prices, index + 1, 0) - prices[index]
+            let coolDown = profit(prices, index + 1, 1)
+            result = max(result, buy, coolDown)
+        } else {
+            let sell = profit(prices, index + 2, 1) + prices[index]
+            let coolDown = profit(prices, index + 1, 0)
+            result = max(result, sell, coolDown)
+        }
+        dp[[index, isBuying]] = result
+        return result
+    }
+}
