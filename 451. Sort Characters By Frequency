@@ -1,0 +1,24 @@
+class Solution {
+    func frequencySort(_ s: String) -> String {
+        var dict: [Character: Int] = [:]
+
+        for c in s {
+            if let temp = dict[c] {
+                dict[c] = temp + 1
+            } else {
+                dict[c] = 1
+            }
+        }
+        print(dict)
+        let keys = dict.keys.sorted(by: {
+            dict[$0]! > dict[$1]!
+        })
+        var ans = ""
+        for key in keys {
+            for i in 0..<dict[key]! {
+                ans += String(key)
+            }
+        }
+        return ans
+    }
+}
