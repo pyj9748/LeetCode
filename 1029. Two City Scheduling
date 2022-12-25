@@ -1,0 +1,16 @@
+class Solution {
+    func twoCitySchedCost(_ costs: [[Int]]) -> Int {
+        let arr = costs.sorted(by: {
+            ($0[1] - $0[0]) > ($1[1] - $1[0])
+        })
+        var cost = 0
+        for i in 0..<arr.count {
+            if i < arr.count / 2 {
+                cost += arr[i][0]
+            } else {
+                cost += arr[i][1]
+            }
+        }
+        return cost
+    }
+}
