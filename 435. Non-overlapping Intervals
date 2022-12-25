@@ -1,0 +1,19 @@
+class Solution {
+    func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
+        let arr = intervals.sorted(by: {
+            if $0[1] < $1[1] {
+                return true
+            }
+            return false
+        })
+        var end = -9000000
+        var cnt = 0
+        for i in 0..<arr.count {
+            if arr[i][0] >= end {
+                end = arr[i][1]
+                cnt += 1
+            } 
+        }
+        return arr.count - cnt
+    }
+}
