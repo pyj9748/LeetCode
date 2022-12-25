@@ -1,0 +1,25 @@
+class Solution {
+    var arr: [Int] = []
+    func answerQueries(_ nums: [Int], _ queries: [Int]) -> [Int] {
+        var answer = Array(repeating: 0, count: queries.count)
+        arr = nums.sorted()
+        for i in 0..<queries.count {
+            answer[i] = ans(queries[i])
+        }
+        return answer
+    }
+
+    func ans(_ query: Int) -> Int {
+        var sum = 0
+        var cnt = 0 
+        for i in arr {
+            if sum + i <= query {
+                sum += i
+                cnt += 1
+            } else {
+                break
+            }
+        }
+        return cnt
+    }    
+}
