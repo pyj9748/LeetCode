@@ -1,0 +1,16 @@
+class Solution {
+   
+    func canJump(_ nums: [Int]) -> Bool {
+        if nums.count == 1 { return true }
+        if nums[0] == 0 { return false }
+        var i = 0
+        var reach = 0
+        while i <= reach {
+            reach = max(reach, i + nums[i])
+            i += 1
+            if reach >= nums.count - 1 { return true }
+        }
+
+        return false
+    }
+}
