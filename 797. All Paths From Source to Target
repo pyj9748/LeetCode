@@ -1,0 +1,22 @@
+class Solution {
+    var g: [[Int]] = []
+    var dest = 0
+    var ans: [[Int]] = []
+    func allPathsSourceTarget(_ graph: [[Int]]) -> [[Int]] {
+        g = graph   
+        dest = g.count - 1
+        dfs(0, [0])
+
+        return ans
+    }
+    func dfs(_ node: Int, _ paths: [Int]) {
+        if node == dest {
+            ans.append(paths)
+        }
+        for v in g[node] {
+            var p = paths
+            p.append(v)
+            dfs(v, p)
+        }
+    }
+}
