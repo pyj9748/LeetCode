@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    var ans: [[Int]] = []
+    var target: Int = 0
+    func pathSum(_ root: TreeNode?, _ targetSum: Int) -> [[Int]] {
+        target = targetSum
+        if root == nil {
+            return []
+        }
+        dfs(root, [], 0)
+        return ans
+    }
+
+    func dfs(_ node: TreeNode?, _ path: [Int], _ sum: Int) {
+        guard let n = node else { return }
+        var p = path
+        p.append(n.val)
+
+        if n.left == nil && n.right == nil && n.val + sum == target {
+            ans.append(p)
+            return
+        } 
+        dfs(n.left, p, sum + n.val)
+        dfs(n.right, p, sum + n.val)
+    }
+}
