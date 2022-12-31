@@ -1,0 +1,31 @@
+class Solution {
+    func evalRPN(_ tokens: [String]) -> Int {
+        var st: [String] = []
+        var operators: [String] = ["+", "-", "*", "/"]
+        for token in tokens {
+            
+            switch token {
+                case "+" :
+                    let ri = Int(st.removeLast())!
+                    let le = Int(st.removeLast())!
+                    st.append(String(le + ri))
+                case "-" :
+                    let ri = Int(st.removeLast())!
+                    let le = Int(st.removeLast())!
+                    st.append(String(le - ri))
+                case "*" :
+                    let ri = Int(st.removeLast())!
+                    let le = Int(st.removeLast())!
+                    st.append(String(le * ri))
+                case "/" :
+                    let ri = Int(st.removeLast())!
+                    let le = Int(st.removeLast())!
+                    st.append(String(le / ri))
+                default : 
+                    st.append(token)
+            }
+            
+        }
+        return Int(st[0])!
+    }
+}
