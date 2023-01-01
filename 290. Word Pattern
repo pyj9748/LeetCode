@@ -1,0 +1,24 @@
+class Solution {
+    func wordPattern(_ pattern: String, _ s: String) -> Bool {
+        var dict: [Character : String] = [:]
+        var arr = s.components(separatedBy:" ")
+        if pattern.count != arr.count {
+            return false
+        }
+        var index = 0
+        for c in pattern {
+            if let a = dict[c] {
+                if a != arr[index] {
+                    return false
+                }
+            } else {
+                if dict.values.contains(arr[index]) {
+                    return false
+                }
+                dict[c] = arr[index]
+            }
+            index += 1
+        }
+        return true
+    }
+}
