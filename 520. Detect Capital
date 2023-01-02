@@ -1,0 +1,18 @@
+class Solution {
+    func detectCapitalUse(_ word: String) -> Bool {
+        var w = word
+        w = w.capitalized
+        if word == w {
+            return true
+        }
+        w = w.uppercased()
+        if word == w {
+            return true
+        }
+        w = w.lowercased()
+        if word == w {
+            return true
+        }
+        return false
+    }
+}
