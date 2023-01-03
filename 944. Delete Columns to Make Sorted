@@ -1,0 +1,23 @@
+class Solution {
+    func minDeletionSize(_ strs: [String]) -> Int {
+        var _strs = strs.map {
+            Array($0)
+        }
+        var str = strs[0]
+        var count = 0
+        let row = _strs.count
+        let col = _strs[0].count
+        for c in 0..<col {
+            var ca = _strs[0][c] 
+            for r in 0..<row {
+                if ca > _strs[r][c] {
+                    count += 1 
+                    break
+                } else {
+                    ca = _strs[r][c]
+                }
+            }
+        }
+        return count
+    }
+}
