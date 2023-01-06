@@ -1,0 +1,16 @@
+class Solution {
+    func maxIceCream(_ costs: [Int], _ coins: Int) -> Int {
+        var cost = costs.sorted()
+        var ans = 0
+        var coin = coins
+        for c in cost {
+            coin -= c
+            if coin >= 0 {
+                ans += 1
+            } else {
+                return ans
+            }
+        }
+        return ans
+    }
+}
