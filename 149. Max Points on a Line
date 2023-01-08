@@ -1,0 +1,51 @@
+class Solution {
+    func maxPoints(_ ps: [[Int]]) -> Int {
+        if ps.count <= 2 {return ps.count}
+        var dict: [String: Set<[Int]>] = [:]
+        var points = ps.sorted(by: {
+            $0[0] < $1[0]
+        })
+        var max = 0
+        for i in 0..<(points.count-1) {
+            for j in i+1..<points.count {
+                let line = line(points[i], points[j])
+                if var a = dict[line] {
+                    a.insert(points[i])
+                    a.insert(points[j])
+                    dict[line] = a
+                } else {
+                    var a: Set<[Int]> = []
+                    a.insert(points[i])
+                    a.insert(points[j])
+                    dict[line] = a
+                }
+                max = max > dict[line]!.count ? max : dict[line]!.count
+            }
+        }
+        print(dict)
+
+        return max
+    }
+    // y = ax + b
+    func line(_ p1: [Int], _ p2: [Int]) -> String {
+        let ydiff = p2[1] - p1[1] 
+        let xdiff = p2[0] - p1[0]
+        var a, b: Double
+        if ydiff == 0 {
+            a = 0
+            b = Double(p1[1])
+        }
+        else if xdiff == 0 {
+            a = Double(Int.max)
+            b = Double(p1[0])
+        }
+        else {
+            a = Double(ydiff) / Double(xdiff)
+			b = Double(p1[1]) - a * Double(p1[0])
+        }
+        
+        return "\(a)-\(b)"
+    }
+
+
+}
