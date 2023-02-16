@@ -1,0 +1,74 @@
+class Solution {
+    func addBinary(_ a: String, _ b: String) -> String {
+        var arr1 = Array(a).map {String($0)}
+        var arr2 = Array(b).map {String($0)}
+        var cur1 = arr1.count - 1
+        var cur2 = arr2.count - 1
+        var carry = 0
+        var ans = ""
+        while cur1 >= 0 && cur2 >= 0 {
+            let le = Int(arr1[cur1])!  
+            let ri = Int(arr2[cur2])!
+            
+            if (le + ri + carry) == 3 {
+                ans = "1" + ans
+                carry = 1
+            } else if (le + ri + carry) == 2 {
+                ans = "0" + ans
+                carry = 1
+            } else if (le + ri + carry) == 1 {
+                ans = "1" + ans
+                carry = 0
+            } else if (le + ri + carry) == 0 {
+                ans = "0" + ans
+                carry = 0
+            }
+            //print(cur1, cur2, le, ri, carry, ans)
+            cur1 -= 1
+            cur2 -= 1
+        }
+
+        if cur1 >= 0 {
+            var temp = ""
+            while cur1 >= 0 {
+                let le = Int(arr1[cur1])!
+                if (le + carry) == 2 {
+                    temp = "0" + temp
+                    carry = 1
+                } else if (le + carry) == 1 {
+                    temp = "1" + temp
+                    carry = 0
+                }  else if (le + carry) == 0 {
+                    temp = "0" + temp
+                    carry = 0
+                }  
+                cur1 -= 1
+            }
+            ans = temp + ans
+        }
+        if cur2 >= 0 {
+            var temp = ""
+            while cur2 >= 0 {
+                let le = Int(arr2[cur2])!
+                if (le + carry) == 2 {
+                    temp = "0" + temp
+                    carry = 1
+                } else if (le + carry) == 1 {
+                    temp = "1" + temp
+                    carry = 0
+                }  else if (le + carry) == 0 {
+                    temp = "0" + temp
+                    carry = 0
+                }  
+                cur2 -= 1
+            }
+            ans = temp + ans
+        }
+        if carry == 1 {
+            ans = "1" + ans
+        }
+        print(ans , carry)
+        return ans
+    }
+    
+}
