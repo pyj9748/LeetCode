@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func invertTree(_ root: TreeNode?) -> TreeNode? {
+        
+        var q = [TreeNode?]()
+        guard var r = root else { return nil }
+        q.append(r)
+        
+        while !q.isEmpty {
+            var top = q.removeFirst()
+            print(top!.val)
+            var temp: TreeNode? = nil
+            if top!.left != nil && top!.right != nil {
+                temp = top!.left
+                top!.left = top!.right
+                top!.right = temp
+                q.append(top!.left)
+                q.append(top!.right)
+            }
+            else if top!.left != nil && top!.right == nil {
+                top!.right = top!.left
+                top!.left = nil
+                q.append(top!.right)
+            }
+            else if top!.left == nil && top!.right != nil {
+                top!.left = top!.right
+                top!.right = nil
+                q.append(top!.left)
+            } 
+            
+        }
+        return r
+    }
+}
