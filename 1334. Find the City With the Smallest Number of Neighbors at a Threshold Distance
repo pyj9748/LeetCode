@@ -1,0 +1,62 @@
+class Solution {
+    func findTheCity(_ n: Int, _ edges: [[Int]], _ distanceThreshold: Int) -> Int {
+        var dict = [Int: [[Int]]]()
+        for i in 0..<n {
+            dict[i] = [[Int]]()
+        }
+        for edge in edges {
+            var a = dict[edge[0]] != nil ? dict[edge[0]]! : [[Int]]()
+            a.append([edge[1], edge[2]])
+            dict[edge[0]] = a
+            var b = dict[edge[1]] != nil ? dict[edge[1]]! : [[Int]]()
+            b.append([edge[0], edge[2]])
+            dict[edge[1]] = b
+        }
+        //
+        var ans = 0
+        var cnt = Int.max
+        var dist = [Int]()
+        var visited = [Bool]()
+        var queue = [Int]()
+        for start in 0..<n {
+            dist = Array(repeating: Int.max, count: n)
+            visited = Array(repeating: false, count: n)
+            dist[start] = 0
+            queue = [start]
+            while !queue.isEmpty {
+                queue.sort(by: {
+                    dist[$0] > dist[$1]
+                })
+                let top = queue.removeLast()
+                visited[top] = true
+                for edge in dict[top]! {
+                    let next = edge[0]
+                    let weight = edge[1]
+                    if !visited[next] {
+                        dist[next] = min(dist[next], dist[top] + weight)
+                        queue.append(next)
+                    }
+                }
+            }
+            var temp = 0
+            for i in 0..<n {    
+                if i == start { continue }
+                else {
+                    if dist[i] <= distanceThreshold {
+                        temp += 1
+                    }
+                }
+            }
+            if temp < cnt {
+                ans = start
+                cnt = temp
+            } else if temp == cnt {
+                if start > ans {
+                    ans = start
+                }
+            }
+            //print(start, temp, dist, visited)
+        }
+        return ans
+    }
+}
