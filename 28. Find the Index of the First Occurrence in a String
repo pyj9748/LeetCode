@@ -1,0 +1,16 @@
+class Solution {
+    func strStr(_ haystack: String, _ needle: String) -> Int {
+        let h = Array(haystack).map { String($0) }
+        if !haystack.contains(needle) {
+            return -1 
+        }
+        var st = 0
+        var end = needle.count - 1
+        for i in 0...h.count - needle.count {
+            if needle == h[i..<(i + needle.count)].reduce("", +) {
+                return i
+            }
+        }
+        return 0
+    }
+}
