@@ -1,0 +1,12 @@
+class Solution {
+    func maxProfit(_ prices: [Int]) -> Int {
+        var dp = Array(repeating: 0, count: prices.count)
+        var ma = prices[0]
+        for k in 1..<prices.count {
+            ma = min(ma, prices[k-1])
+            dp[k] = max(prices[k] - ma, dp[k-1])
+        }
+        print(dp)
+        return dp[prices.count - 1]
+    }
+}
