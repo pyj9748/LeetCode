@@ -1,0 +1,20 @@
+class Solution {
+    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
+        var n = 1
+        var count = 0
+        var idx = 0
+        while count < k && idx < arr.count {
+            if arr[idx] == n { 
+                idx += 1
+                n += 1
+            } else if n < arr[idx] {
+                n += 1
+                count += 1
+            } 
+        }
+        if count < k {
+            n += (k - count)
+        }
+        return n - 1
+    }
+}
