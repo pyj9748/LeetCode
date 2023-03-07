@@ -1,0 +1,35 @@
+class Solution {
+    func minimumTime(_ time: [Int], _ totalTrips: Int) -> Int {
+        var le = 0
+        var ri = 99999999999999
+        var mid = (le + ri) / 2
+        func calculate(t : Int) -> Int {
+            var temp = 0
+            for ti in time {
+                temp += t / ti
+            }
+            return temp
+        }
+        while le <= ri {
+            mid = (le + ri) / 2
+            if calculate(t: mid) < totalTrips {
+                le = mid + 1
+            } else if calculate(t: mid) > totalTrips {
+                ri = mid - 1
+            } else {
+                break
+            }
+        }
+       
+        if calculate(t: mid) < totalTrips {
+            return mid + 1
+        }
+        if calculate(t: (mid - 1)) != totalTrips {
+            return mid
+        }
+        while calculate(t: mid) == totalTrips {
+            mid -= 1
+        }
+        return mid + 1
+    }
+}
