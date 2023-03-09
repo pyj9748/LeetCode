@@ -1,0 +1,28 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.next = nil
+ *     }
+ * }
+ */
+
+class Solution {
+    func detectCycle(_ head: ListNode?) -> ListNode? {
+        var cur1 = head?.next
+        var cur2 = head?.next?.next
+        while cur2 != nil && cur1 !== cur2 {
+            cur1 = cur1?.next
+            cur2 = cur2?.next?.next
+        }
+        var node = head
+        while node !== cur2 {
+            node = node?.next
+            cur2 = cur2?.next
+        }
+        return node
+    }
+}
