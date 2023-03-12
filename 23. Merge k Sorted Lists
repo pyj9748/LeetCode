@@ -1,0 +1,173 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init() { self.val = 0; self.next = nil; }
+ *     public init(_ val: Int) { self.val = val; self.next = nil; }
+ *     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ * }
+ */
+class Solution {
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        var ans: ListNode? = nil
+        var heap = Heap(arr:[], isMaxHeap: false)
+        //
+        for list in lists {
+            var node = list
+            while node != nil {
+                heap.insert(node!.val)
+                node = node?.next
+            }
+        }
+        
+        //
+        if heap.arr.count > 0 {
+            ans = ListNode(heap.pop()!)
+        }
+        var node = ans
+        while heap.arr.count > 0 {
+            node?.next = ListNode(heap.pop()!)
+            node = node?.next
+        }
+
+        return ans
+    }
+}
+
+class Heap {
+    var arr: [Int]
+    var isMaxHeap: Bool
+    init(arr: [Int], isMaxHeap: Bool) {
+        self.isMaxHeap = isMaxHeap
+        self.arr = [Int]()
+        makeHeap()
+    } 
+
+    func makeHeap() {
+        for k in stride(from: arr.count - 1, through: 0, by: -1) {
+            if isMaxHeap {
+                maxHeapifyDown(idx: k)
+            } else {
+                minHeapifyDown(idx: k)
+            }
+        }
+    }
+    func minHeapifyDown(idx: Int) {
+        var i = idx
+        while (2 * i) + 1 < arr.count { // 자식이 하나라도 존재
+            if (2 * i) + 2 < arr.count { // 왼쪽 오른쪽 자식 둘다 존대
+                if arr[i] > min(arr[(2 * i) + 1], arr[(2 * i) + 2]) {
+                    if arr[(2 * i) + 1] < arr[(2 * i) + 2] {
+                        let temp = arr[i]
+                        arr[i] = arr[(2 * i) + 1]
+                        arr[(2 * i) + 1] = temp
+                        i = (2 * i) + 1
+                    } else {
+                        let temp = arr[i]
+                        arr[i] = arr[(2 * i) + 2]
+                        arr[(2 * i) + 2] = temp
+                        i = (2 * i) + 2
+                    }
+                } else { break }
+            } else { // 왼쪽 자식만 존재  
+                if arr[i] > arr[(2 * i) + 1] {
+                    let temp = arr[i]
+                    arr[i] = arr[(2 * i) + 1]
+                    arr[(2 * i) + 1] = temp
+                    i = (2 * i) + 1
+                } else {
+                    break
+                }
+            }
+        }
+        
+    }
+    func maxHeapifyDown(idx: Int) {
+        var i = idx
+        
+        while (2 * i) + 1 < arr.count { // 자식이 하나라도 존재
+            if (2 * i) + 2 < arr.count { // 왼쪽 오른쪽 자식 둘다 존대
+                if arr[i] < max(arr[(2 * i) + 1], arr[(2 * i) + 2]) {
+                    if arr[(2 * i) + 1] > arr[(2 * i) + 2] {
+                        let temp = arr[i]
+                        arr[i] = arr[(2 * i) + 1]
+                        arr[(2 * i) + 1] = temp
+                        i = (2 * i) + 1
+                    } else {
+                        let temp = arr[i]
+                        arr[i] = arr[(2 * i) + 2]
+                        arr[(2 * i) + 2] = temp
+                        i = (2 * i) + 2
+                    }
+                } else { break }
+            } else { // 왼쪽 자식만 존재  
+                if arr[i] < arr[(2 * i) + 1] {
+                    let temp = arr[i]
+                    arr[i] = arr[(2 * i) + 1]
+                    arr[(2 * i) + 1] = temp
+                    i = (2 * i) + 1
+                } else {
+                    break
+                }
+            }
+        }
+    }
+    func insert(_ val: Int) {
+        arr.append(val)
+        if isMaxHeap {
+            maxHeapifyUp()
+        } else {
+            minHeapifyUp()
+        }
+    }
+    func maxHeapifyUp() {
+        var i = arr.count - 1
+        while i > 0 {
+            let k = (i-1) / 2
+            if arr[i] > arr[k] {
+                let temp = arr[i]
+                arr[i] = arr[k]
+                arr[k] = temp
+            } else {
+                break
+            }
+            i = k
+        }
+    }
+
+    func minHeapifyUp() {
+        var i = arr.count - 1
+        while i > 0 {
+            let k = (i-1) / 2
+            if arr[i] < arr[k] {
+                let temp = arr[i]
+                arr[i] = arr[k]
+                arr[k] = temp
+            } else {
+                break
+            }
+            i = k
+        }
+    }
+    func findValue() -> Int? {
+        if arr.count == 0 {
+            return nil
+        }
+        return arr[0]
+    }
+    func pop() -> Int? {
+        if arr.count == 0 {
+            return nil
+        }
+        let temp = arr[0]
+        arr[0] = arr[arr.count - 1]
+        arr.removeLast()
+        if isMaxHeap {
+            maxHeapifyDown(idx: 0)
+        } else {
+            minHeapifyDown(idx: 0)
+        }
+        return temp
+    }
+}
