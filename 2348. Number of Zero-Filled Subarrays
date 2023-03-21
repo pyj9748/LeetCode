@@ -1,0 +1,28 @@
+class Solution {
+    func zeroFilledSubarray(_ nums: [Int]) -> Int {
+        var dict = [Int: Int]()
+        var temp = 0
+        for num in nums {
+            if num == 0 {
+                temp += 1
+            } else {
+                if temp != 0 {
+                    let a = dict[temp] != nil ? dict[temp]! : 0
+                    dict[temp] = a + 1
+                    temp = 0
+                } 
+            }
+        }
+        if temp != 0 {
+            let a = dict[temp] != nil ? dict[temp]! : 0
+            dict[temp] = a + 1
+        }
+        var ans = 0
+        for key in dict.keys {
+            for i in 1...(key) {
+                ans += dict[key]! * i
+            }
+        }
+        return ans
+    }
+}
