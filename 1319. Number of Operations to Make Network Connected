@@ -1,0 +1,55 @@
+class Solution {
+    func makeConnected(_ n: Int, _ connections: [[Int]]) -> Int {
+        var visited = Array(repeating: false, count: n)
+        var dict = [Int: Set<Int>]()
+        var groupCount = 0
+        //
+        for co in connections {
+            var a = dict[co[0]] != nil ? dict[co[0]]! : Set<Int>()
+            a.insert(co[1])
+            dict[co[0]] = a
+            var b = dict[co[1]] != nil ? dict[co[1]]! : Set<Int>()
+            b.insert(co[0])
+            dict[co[1]] = b
+        }
+        //
+        let keys = dict.keys.filter { dict[$0]!.count > 0 }
+        var unneed = 0
+        for key in keys {
+            var que = [Int]()
+            var visitedSet = Set<Int>()
+            if dict[key]!.count > 0 {
+                que.append(key)
+                groupCount += 1
+            }
+            
+            while !que.isEmpty {
+                let cur = que.removeLast()
+                visited[cur] = true
+                if visitedSet.contains(cur) {
+                    unneed += 1
+                } else {
+                    visitedSet.insert(cur)
+                }
+                let nexts = dict[cur] != nil ? dict[cur]! : Set<Int>()
+                for next in nexts {
+                    if !visited[next] {
+                        que.append(next)
+                        var a = dict[cur]!
+                        a.remove(next)
+                        var b = dict[next]!
+                        b.remove(cur)
+                        dict[cur] = a
+                        dict[next] = b
+                    }
+                }
+            }
+        }
+        
+        let disconnected = visited.filter{ $0 == false}.count + (groupCount - 1)
+        if disconnected > unneed {
+            return -1
+        }
+        return disconnected 
+    }
+}
