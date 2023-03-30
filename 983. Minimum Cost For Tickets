@@ -1,0 +1,20 @@
+class Solution {
+    func mincostTickets(_ days: [Int], _ costs: [Int]) -> Int {
+        let lastDay = days.last! 
+        let daySet = Set(days)
+        var dp = Array(repeating: 0, count: lastDay + 1)
+        for k in 1...lastDay {
+            if daySet.contains(k) {
+                let cost1 = dp[max(0, k - 1)] + costs[0] 
+                let cost7 = dp[max(0, k - 7)] + costs[1]
+                let cost30 = dp[max(0, k - 30)] + costs[2] 
+                dp[k] = min(cost1, cost7, cost30)  
+            } else {
+                dp[k] = dp[k - 1]
+            }
+              
+        }
+     
+        return dp[lastDay]
+    }
+}
