@@ -1,0 +1,44 @@
+class Solution {
+    func successfulPairs(_ spells: [Int], _ potions: [Int], _ success: Int) -> [Int] {
+        var ans = [Int]()
+        var p = potions.sorted()
+        for spell in spells {
+            var le = 0
+            var ri = p.count - 1
+            var mid = 0
+            var flag = false
+            while le < ri {
+                mid = (le + ri) / 2 
+                let key = p[mid] * spell
+                //print(spell, key, mid)
+                if key == success {
+                    flag = true
+                    break
+                } else if key < success {
+                    le = mid + 1
+                } else {
+                    ri = mid - 1
+                }
+            }
+            if !flag {
+                if p[le] * spell >= success {
+                    ans.append(p.count - (le))
+                } else {
+                    ans.append(p.count - (le + 1))
+                }
+            } else {
+                let target = p[mid] * spell
+                var idx = mid
+                while idx >= 0 && p[idx] * spell == target {
+                    idx -= 1
+                }
+                if idx < 0 {
+                    ans.append(p.count)
+                } else {
+                    ans.append(p.count - (idx + 1))
+                }  
+            }
+        }
+        return ans
+    }
+}
