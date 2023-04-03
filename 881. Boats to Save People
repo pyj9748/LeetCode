@@ -1,0 +1,19 @@
+class Solution {
+    func numRescueBoats(_ people: [Int], _ limit: Int) -> Int {
+        var arr = people.sorted()
+        var le = 0
+        var ri = arr.count - 1
+        var ans = 0
+        while le <= ri {
+            var temp = arr[ri]
+            ri -= 1
+            if temp + arr[le] <= limit {
+                temp += arr[le]
+                le += 1
+            } 
+            ans += 1
+        }
+        
+        return ans
+    }
+}
