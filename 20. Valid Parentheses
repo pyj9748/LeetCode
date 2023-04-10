@@ -1,0 +1,41 @@
+class Solution {
+    func isValid(_ s: String) -> Bool {
+        var st = [Character]()
+        for c in s {
+            if st.isEmpty {
+                st.append(c)
+                continue
+            }
+            if c == "(" || c == "{" || c == "[" {
+                st.append(c)
+            } else {
+                if c == ")" {
+                    if st.isEmpty || st.last! != "(" {
+                        return false
+                    } else {
+                        st.removeLast()
+                    }
+                } else if c == "}" {
+                    if st.isEmpty || st.last! != "{" {
+                        return false
+                    } else {
+                        st.removeLast()
+                    }
+                } else {
+                    if st.isEmpty || st.last! != "[" {
+                        return false
+                    } else {
+                        st.removeLast()
+                    }
+                }
+
+            }
+            
+        }
+        if st.isEmpty { 
+            return true
+        } else {
+            return false
+        }
+    }
+}
