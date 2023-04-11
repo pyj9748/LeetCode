@@ -1,0 +1,19 @@
+class Solution {
+    func removeStars(_ s: String) -> String {
+        var ans = ""
+        var st = [Character]()
+        for c in s {
+            if c == "*" {
+                if let top = st.last {
+                  st.removeLast()
+                }
+            } else {
+                st.append(c)
+            }
+        }
+        for c in st {
+            ans += String(c)
+        }
+        return ans
+    }
+}
