@@ -1,0 +1,38 @@
+class Solution {
+    func validateStackSequences(_ pushed: [Int], _ popped: [Int]) -> Bool {
+        var pushIdx = 0
+        var popIdx = 0
+        var st = [Int]()
+        while pushIdx < pushed.count {
+            if pushed[pushIdx] != popped[popIdx] {
+                if let top = st.last {
+                    if top == popped[popIdx] {
+                        st.removeLast()
+                        popIdx += 1
+                        continue
+                    }
+                }
+                 st.append(pushed[pushIdx])
+                pushIdx += 1
+            }
+            else {
+                pushIdx += 1
+                popIdx += 1
+            }
+        }
+
+        while popIdx < pushed.count {
+
+            if let top = st.last {
+                if popped[popIdx] == top {
+                    st.removeLast()
+                    popIdx += 1
+                } else {
+                    return false
+                }
+            }
+        }
+        return true
+
+    }
+}
