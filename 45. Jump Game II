@@ -1,0 +1,18 @@
+class Solution {
+    func jump(_ nums: [Int]) -> Int {
+        var dp = Array(repeating: 99999999, count: nums.count)
+        dp[0] = 0
+        for i in 0..<nums.count {
+            if nums[i] == 0 {
+                continue
+            }
+            for j in 1...nums[i] {
+                if i + j < nums.count {
+                    dp[i+j] = min(dp[i+j], dp[i] + 1)
+                }
+                else { break }
+            }
+        }
+        return dp[nums.count - 1]
+    }
+}
