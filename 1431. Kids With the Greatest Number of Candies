@@ -1,0 +1,14 @@
+class Solution {
+    func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
+        guard let _max = candies.max() else {return []}
+        var ans = [Bool]()
+        for candy in candies {
+            if candy + extraCandies >= _max {
+                ans.append(true)
+            } else {
+                ans.append(false)
+            }
+        }
+        return ans
+    }
+}
