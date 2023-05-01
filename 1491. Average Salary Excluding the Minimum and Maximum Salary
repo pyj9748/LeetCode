@@ -1,0 +1,16 @@
+class Solution {
+    func average(_ salary: [Int]) -> Double {
+        var sum = 0
+        var ma = Int.min
+        var mi = Int.max
+
+        for s in salary {
+            sum += s
+            ma = max(ma, s)
+            mi = min(mi, s)
+        }
+        sum -= (ma + mi)
+        print(sum, salary.count - 2)
+        return Double(sum) / Double(salary.count - 2)
+    }
+}
