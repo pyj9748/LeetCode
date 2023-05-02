@@ -1,0 +1,12 @@
+class Solution {
+    func arraySign(_ nums: [Int]) -> Int {
+        var ans = 1
+
+        for num in nums {
+            if num == 0 { return 0 }
+
+            if num < 0 { ans *= -1}
+        }
+        return ans
+    }
+}
