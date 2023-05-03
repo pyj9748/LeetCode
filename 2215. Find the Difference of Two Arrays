@@ -1,0 +1,19 @@
+class Solution {
+    func findDifference(_ nums1: [Int], _ nums2: [Int]) -> [[Int]] {
+        let s1 = Set(nums1)
+        let s2 = Set(nums2)
+        var arr1 = [Int]()
+        var arr2 = [Int]()
+        for i in s1 {
+            if !s2.contains(i) {
+                arr1.append(i)
+            }
+        }
+         for i in s2 {
+            if !s1.contains(i) {
+                arr2.append(i)
+            }
+        }
+        return [arr1.sorted(), arr2.sorted()]
+    }
+}
