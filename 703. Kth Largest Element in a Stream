@@ -1,0 +1,26 @@
+class KthLargest {
+    var nums: [Int] 
+    var k: Int
+    init(_ k: Int, _ nums: [Int]) {
+        self.k = k
+        self.nums = nums.sorted(by: >)
+    }
+    
+    func add(_ val: Int) -> Int {
+        if nums.count < k {
+            nums.append(val)
+            nums.sort(by: >)
+            return nums.last!
+        }
+        for idx in 0..<nums.count {
+            if nums[idx] > val {
+                continue
+            } 
+            else {
+                nums.insert(val, at: idx)
+                break
+            }
+        }
+        return nums[k-1]
+    }
+}
