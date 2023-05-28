@@ -1,0 +1,30 @@
+class Solution {
+    func diagonalSum(_ mat: [[Int]]) -> Int {
+        let n = mat.count
+        var ans = 0
+        var i = 0
+        var j = 0
+
+        while i < n && j < n {
+            ans += mat[i][j]
+            //print(mat[i][j])
+            i += 1
+            j += 1
+        }
+
+        var a = 0
+        var b = n - 1
+
+        while a < n && b > -1 {
+            ans += mat[a][b]
+            //print(mat[a][b])
+            a += 1
+            b -= 1
+        } 
+
+        if n % 2 == 1 {
+            ans -= mat[n / 2][n / 2]
+        }
+        return ans
+    }
+}
