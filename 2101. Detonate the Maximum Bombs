@@ -1,0 +1,51 @@
+class Solution {
+    func maximumDetonation(_ bombs: [[Int]]) -> Int {
+        var ans = 0
+
+        var arr = bombs.sorted {
+            pow(Double($0[0]), 2.0) + pow(Double($0[1]), 2.0) < pow(Double($1[0]), 2.0) + pow(Double($1[1]), 2.0)
+        }
+
+        for i in 0..<arr.count {
+            arr[i].append(i)
+        }
+
+        for i in 0..<arr.count {
+            //print("bomb ", i , "start")
+            var temp = 0
+            var visited = Array(repeating: false, count: arr.count)
+            var queue = [[Int]]()
+            queue.append(arr[i])
+            while !queue.isEmpty {
+                let top = queue.removeLast()
+                if visited[top[3]] == false {
+                    visited[top[3]] = true
+                    //print(top[3],"boom")
+                    temp += 1
+                } else { continue }
+                
+                var idx = top[3]
+                // le
+                while idx > 0 {
+                    idx -= 1
+                    if  pow(Double(arr[idx][0] - top[0])  , 2.0) + pow(Double(arr[idx][1] - top[1])  , 2.0) <= pow(Double(top[2]) , 2.0) {
+                        queue.append(arr[idx])
+                    }
+                }
+                // ri
+                while idx < (arr.count - 1) {
+                    idx += 1
+                     if  pow(Double(arr[idx][0] - top[0])  , 2.0) + pow(Double(arr[idx][1] - top[1])  , 2.0) <= pow(Double(top[2]) , 2.0) {
+                        queue.append(arr[idx])
+                    }
+                }
+
+                ans = max(ans, temp)
+            }
+        
+        }
+
+        return ans
+
+    }
+}
