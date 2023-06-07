@@ -1,0 +1,33 @@
+class Solution {
+    func minFlips(_ a: Int, _ b: Int, _ c: Int) -> Int {
+        var target = Array(String(c, radix: 2)).map {String($0)}
+        var s1 = Array(String(a, radix: 2)).map {String($0)}
+        var s2 = Array(String(b, radix: 2)).map {String($0)}
+        var ans = 0
+        let maxLen = max(s1.count, s2.count, target.count)
+
+        let diff1 = maxLen - s1.count
+        s1 = Array(repeating: "0", count: diff1).map {String($0)} + s1
+        let diff2 = maxLen - s2.count
+        s2 = Array(repeating: "0", count: diff2).map {String($0)} + s2
+        let diff3 = maxLen - target.count
+        target = Array(repeating: "0", count: diff3).map {String($0)} + target
+
+        for i in stride(from: target.count - 1, through: 0, by: -1) {
+            let n1 = Int(s1[i])!
+            let n2 = Int(s2[i])!
+            let flag = n1 + n2
+            if target[i] == "0" {
+                if flag == 2 {
+                    ans += 2
+                } else if flag == 1 {
+                    ans += 1
+                } else { continue }
+            } else {
+                if flag == 0 { ans += 1 }
+            }
+        }
+
+        return ans
+    }
+}
