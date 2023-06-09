@@ -1,0 +1,17 @@
+class Solution {
+    func nextGreatestLetter(_ letters: [Character], _ target: Character) -> Character {
+        var ans: Character = "z"
+        var flag = false
+        for c in letters {
+            if target >= c { continue }
+            flag = true
+            if ans.asciiValue! > c.asciiValue! {
+                ans = c
+            }
+        }
+        if !flag {
+            return letters[0]
+        } 
+        return ans
+    }
+}
