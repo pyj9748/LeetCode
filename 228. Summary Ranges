@@ -1,0 +1,27 @@
+class Solution {
+    func summaryRanges(_ nums: [Int]) -> [String] {
+        var ans = [String]()
+        if nums.count == 0 { return ans }
+        if nums.count == 1 { return [ String(nums[0]) ] } 
+        var a = nums[0]
+        var b = nums[0]
+        for i in 1..<nums.count {
+            if nums[i-1] + 1 != nums[i] {
+                if a == b { ans.append(String(b)) }
+                else {
+                    ans.append(String(a) + "->" + String(b))
+                } 
+                a = nums[i]
+            }
+            b = nums[i]
+            if i == (nums.count - 1) {
+                if a == b { ans.append(String(b)) }
+                else {
+                    ans.append(String(a) + "->" + String(b))
+                } 
+            }
+        }
+
+        return ans
+    }
+}
