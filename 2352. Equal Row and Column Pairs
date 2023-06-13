@@ -1,0 +1,32 @@
+class Solution {
+    func equalPairs(_ grid: [[Int]]) -> Int {
+        let n = grid.count
+        
+        var row = [Int : String]()
+        var col = [Int : String]()
+        var ans = 0 
+        for i in 0..<n {
+            var temp = ""
+            for j in 0..<n {
+                temp += String(grid[i][j]) + " "
+            }
+            row[i] = temp
+        }
+        for j in 0..<n {
+            var temp = ""
+            for i in 0..<n {
+                temp += String(grid[i][j]) + " "
+            }
+            col[j] = temp
+        }
+        
+        for i in 0..<n {
+            for j in 0..<n {
+                if row[i]! == col[j]! {
+                    ans += 1
+                }
+            }
+        } 
+        return ans 
+    }
+}
