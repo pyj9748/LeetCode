@@ -1,0 +1,29 @@
+class Solution {
+    func getAverages(_ nums: [Int], _ k: Int) -> [Int] {
+        var ans = [Int]()
+        var tempSum: Int = 0
+        if k == 0 { return nums }
+        let windowSize = 2*k + 1
+        if windowSize > nums.count {
+            return Array(repeating: -1, count: nums.count)
+        }
+
+        for i in 0..<(windowSize) {
+            tempSum += nums[i]
+        }
+
+        ans += Array(repeating: -1, count: k)
+        // k
+        ans.append(tempSum / (windowSize))
+        
+        for i in (k+1)..<(nums.count - k) {
+            tempSum -= nums[i - (k+1)]
+            tempSum += nums[i + k]
+            ans.append(tempSum / (windowSize))
+        }
+        ans += Array(repeating: -1, count: k)
+    
+        return ans
+
+    }
+}
