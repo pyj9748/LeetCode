@@ -1,0 +1,10 @@
+class Solution {
+    func maxProfit(_ prices: [Int], _ fee: Int) -> Int {
+        var soldState = 0, boughtState = -prices.first!
+        for price in prices[1...] {
+            soldState = max(soldState, boughtState + price - fee)
+            boughtState = max(boughtState, soldState - price)
+        }
+        return soldState
+    }
+}
