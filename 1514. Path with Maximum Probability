@@ -1,0 +1,118 @@
+class Solution {
+    func maxProbability(_ n: Int, _ edges: [[Int]], _ succProb: [Double], _ start: Int, _ end: Int) -> Double {
+        var ans: Double = 0.0
+
+        var visited = Array(repeating: Array(repeating: false, count: n), count: n)
+        var possible = Array(repeating: 0.0, count: n)
+        var dict = [ Int : [(next: Int, prob: Double)] ]()
+        for i in 0..<edges.count {
+            let u = edges[i][0]
+            let v = edges[i][1]
+            let prob = succProb[i]
+            dict[u,default:[]].append((v,prob))
+            dict[v,default:[]].append((u,prob))
+        }
+        let heap = Heap<(prob: Double, cur: Int)>([(1.0, start)], comparator: {
+            $0.prob > $1.prob
+        })
+        possible[start] = 1.0
+        while !heap.arr.isEmpty {
+            let top = heap.pop()!
+            if top.cur == end {
+                return top.prob
+            }
+            for a in dict[top.cur, default: []] {
+                if a.prob * top.prob > possible[a.next] {
+                    possible[a.next] = a.prob * top.prob
+                    heap.push((possible[a.next], a.next))
+                }
+            }
+        }
+        return 0.0
+    }
+}
+
+final class Heap<T> {
+    typealias Comparator = (T, T) -> Bool
+
+    var arr: [T]
+    var comparator: Comparator
+
+    init(_ arr: [T], comparator: @escaping Comparator) {
+        self.arr = arr
+        self.comparator = comparator
+        makeHeap()
+    }
+
+    func makeHeap() {
+        for i in stride(from: arr.count - 1, through: 0, by: -1) {
+            heapifyDown(idx: i)
+        }
+    }
+
+    func heapifyDown(idx: Int) {
+        var i = idx
+        while 2 * i + 1 < arr.count {
+            // child 2
+            if 2 * i + 2 < arr.count {
+                let lc = 2 * i + 1
+                let rc = 2 * i + 2 
+                var c = lc
+                if !comparator(arr[lc], arr[rc]) {
+                    c = rc
+                } 
+                if !comparator(arr[i], arr[c]) {
+                    let temp = arr[i]
+                    arr[i] = arr[c]
+                    arr[c] = temp
+                    i = c
+                } else {
+                    break
+                }
+            } 
+            // child 1
+            else {
+                let c = 2 * i + 1
+                if !comparator(arr[i], arr[c]) {
+                    let temp = arr[i]
+                    arr[i] = arr[c]
+                    arr[c] = temp
+                    i = c
+                } else {
+                    break
+                } 
+            }
+        }
+
+    }
+
+    func heapifyUp() {
+        var i = arr.count - 1
+        var p = 0
+        while i > 0 {
+            p = (i - 1) / 2
+            if comparator(arr[i], arr[p]) {
+                let temp = arr[i]
+                arr[i] = arr[p]
+                arr[p] = temp
+                i = p
+            } else {
+                break
+            }
+        }
+    }
+    
+    func push(_ value: T) {
+        arr.append(value)
+        heapifyUp()
+    } 
+
+    func pop() -> T? {
+        if arr.count == 0 { return nil }
+        let ret = arr[0]
+        arr[0] = arr[arr.count - 1]
+        arr.removeLast()
+        heapifyDown(idx: 0)
+        return ret
+    }
+}
