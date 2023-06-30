@@ -1,0 +1,34 @@
+class Solution {
+    func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
+        var dp = [Bool](repeating: false, count: s.count + 1)
+        var row = [[String]](repeating: [], count: 0)
+        var str = Array(repeating: row, count: s.count + 1)
+        
+        dp[0] = true
+
+        let wordSet = Set(wordDict)
+        let arr = Array(s)
+        var word = ""
+        for i in 1...s.count {
+            for j in 0..<i {
+                word = String(arr[j..<i])
+                guard dp[j], wordSet.contains(word) else { continue}
+                dp[i] = true
+                if str[j].count != 0 {
+                    for k in 0..<str[j].count {
+                        var temp = str[j][k]
+                        temp.append(word)
+                        str[i].append(temp)
+                    }
+                } else {
+                    str[i].append([word])
+                }
+                
+            }
+        }
+
+        return str[s.count].map { 
+            $0.joined(separator: " ")
+        }
+    }
+}
