@@ -1,0 +1,17 @@
+class Solution {
+    func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        var dp = [Bool](repeating: false, count: s.count + 1)
+        dp[0] = true
+        let arr = Array(s)
+        let wordSet = Set(wordDict)
+
+        for i in 1...s.count {
+            for j in 0..<i {
+                guard dp[j], wordSet.contains(String(arr[j..<i])) else {continue} 
+                dp[i] = true
+                break
+            }
+        }
+        return dp[s.count]
+    }
+}
