@@ -1,0 +1,75 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.left = nil
+ *         self.right = nil
+ *     }
+ * }
+ */
+class Solution {
+    func distanceK(_ root: TreeNode?, _ target: TreeNode?, _ k: Int) -> [Int] {
+        var dict = [Int : [Int]]()
+        var que = [TreeNode?]()
+        var ans = [Int]()
+        que.append(root)
+        // 1
+    
+        while !que.isEmpty {
+            guard let node = que.removeLast() else { continue }
+            if node.left != nil {
+                que.append(node.left)
+                if var temp = dict[node.val] {
+                    temp.append(node.left!.val)
+                    dict[node.val] = temp
+                } else {
+                    dict[node.val] = [node.left!.val]
+                }
+                if var temp = dict[node.left!.val] {
+                    temp.append(node.val)
+                    dict[node.left!.val] = temp
+                } else {
+                    dict[node.left!.val] = [node.val]
+                }
+            }   
+            if node.right != nil {
+                que.append(node.right)
+                if var temp = dict[node.val] {
+                    temp.append(node.right!.val)
+                    dict[node.val] = temp
+                } else {
+                    dict[node.val] = [node.right!.val]
+                }
+                if var temp = dict[node.right!.val] {
+                    temp.append(node.val)
+                    dict[node.right!.val] = temp
+                } else {
+                    dict[node.right!.val] = [node.val]
+                }
+            }          
+        }
+    
+        // 2
+        func recur(cnt: Int, from: Int, now: Int) {
+            if cnt == k {
+                ans.append(now)
+                return
+            }
+            if dict[now] == nil { return }
+            for next in dict[now]! {
+                if next != from {
+                    recur(cnt: cnt + 1, from: now, now: next)
+                }
+            }
+            return 
+        }     
+        recur(cnt: 0, from: -1, now: target!.val)
+        return ans
+    }
+
+    
+}
